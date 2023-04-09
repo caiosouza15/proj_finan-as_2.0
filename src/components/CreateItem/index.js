@@ -1,3 +1,3 @@
-    import {CreateItem} from "./CreateItem";
+import { CreateItem } from "./CreateItem"
 
 export default CreateItem;

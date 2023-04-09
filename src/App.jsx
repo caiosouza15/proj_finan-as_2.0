@@ -1,9 +1,7 @@
 import React from "react";
 
-import TableItems from "./components/TableItems/index";
-import NavBar from "./components/NavBar/index";
-import { CreateItem } from "./components/CreateItem/CreateItem";
-import { Route, Routes } from "react-router-dom";
+
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
@@ -12,11 +10,8 @@ const App = () => {
         <p className="text-white text-3xl">FINANÇAS</p>
       </div>
 
-      <NavBar />
-      <TableItems />
-      <Routes>
-        <Route component={CreateItem} path={"/CreateItem"} />
-      </Routes>      
+         <Outlet />
+      
     </div>
   );
 };
