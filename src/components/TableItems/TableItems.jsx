@@ -4,29 +4,40 @@ import { Link } from "react-router-dom";
 
 
 export const TableItems = () => {
-  const [response, setResonse] = useState([]);
+  const [response, setResponse] = useState([]);
 
   useEffect(() => {
     getTitles();
   }, []);
 
   async function getTitles() {
-    const { data } = await supabase.from("titles").select();
-    setResonse(data);
+    const { data } = await supabase.from("registres").select();  
+    if( data.length ){
+      setResponse(data);
+    }      
+  }  
+
+  const captureId = async (id) => {
+    if(id){
+      confirm("Tem certeza que deseja excluir?");
+      await supabase.from("registres").delete().eq('id', id).then(response => {
+        if(response = 204){
+          window.location.reload(true);
+        }
+      });
+    }    
   }
 
   return (
     <>
       <div className="h-20 w-1/2 -mt-7 p-7 bg-slate-300 flex justify-between items-center text-justify rounded shadow-md">
         <div>TEST</div>
-        {/* <button
+        <button
           className="bg-transparent hover:bg-sky-100 text-zinc font-semibold py-2 px-4 text-sm ml-4 border
-                    border-zinc-500  rounded"
-        >
-          
-          Novo lançamento
-        </button> */}
-        <Link to={"/createItem"}> TEST</Link>
+                    border-zinc-500  rounded">          
+          <Link to={`/createItem`}> Novo lançamento</Link>
+        </button>
+        
       </div>
 
       <table className="table-fixed w-auto mt-5 text-sm text-left ">
@@ -61,9 +72,10 @@ export const TableItems = () => {
                 <button
                   className="bg-transparent hover:bg-zinc-300 text-zinc font-semibold py-2 px-4 ml-4 border
                   border-zinc-500 hover:border-transparent rounded">
-                    Editar
+                    <Link to={`/createItem/${item.id}`}>Editar</Link>
                 </button>
                 <button
+                  onClick={() => captureId(item.id)}
                   className="bg-transparent hover:bg-zinc-300 text-zinc font-semibold py-2 px-4 ml-4 border
                   border-zinc-500 hover:border-transparent rounded">
                     Excluir
