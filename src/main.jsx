@@ -4,8 +4,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App';
 import { ErrorPage } from './ErrorPage';
-import  CreateItem  from './components/CreateItem/index';
 import TableItems from './components/TableItems';
+import FormItem from './components/FormItem/index';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         },       
         {
           path: "/createItem/:id?",
-          element: <CreateItem />,
+          element: <FormItem />,
         },
       ],
   }, 
