@@ -1,18 +1,23 @@
 import React from "react";
 
-
 import { Outlet } from "react-router-dom";
+import { NavBar } from "./components/NavBar/NavBar";
+import { Box, Container, Grid } from "@mui/material";
+import { Cards } from "./components/Cards/Cards";
 
 const App = () => {
   return (
-    <div className="w-screen h-screen bg-slate- flex flex-col items-center">
-      <div className="w-screen h-32 flex justify-center items-center text-justify bg-slate-700">
-        <p className="text-white text-3xl">FINANÇAS</p>
-      </div>
-
-         <Outlet />
-      
-    </div>
+    <Box>
+      <Box color='secundary' marginBottom>        
+        <NavBar />
+      </Box>  
+          <Grid container spacing={2}> 
+            <Grid item xs={6}> <Cards /> </Grid>
+            <Grid item xs={6}> <Outlet /> </Grid>
+          </Grid>          
+                
+         
+    </Box>
   );
 };
 
