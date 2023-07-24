@@ -5,14 +5,10 @@ import { supabase } from "../../dbConfig";
 import { useParams } from "react-router-dom";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
-export const FormItem = () => {
+export const FormItem = ({id}) => {
+
   const [initialDate, setInitialDate] = useState();
-
-
-
-  const { id } = useParams();
-
-  
+    
   useEffect(() => {
     if (id) {
       async function fetchRecord() {
@@ -88,15 +84,14 @@ export const FormItem = () => {
       <Typography variant="h6" marginLeft={1.5}>Novo lançamento</Typography>
       <div>
         <TextField
-          id="outlined-basic"
-          label="Nome do gasto"
-          variant="outlined"
           {...register("name")}
+          id="outlined-basic"
+          label={initialDate ? "" : "Nome do gasto"}
+          variant="outlined"
           required
           type="text"
           minLength={4}
           maxLength={25}
-          placeholder="Nome do gasto"
         />
 
         <TextField
@@ -105,19 +100,18 @@ export const FormItem = () => {
           {...register("data")}
           required
           type="date"
-          placeholder="Nome do gasto"
+          
         />
       </div>
       <div>
         <TextField
           id="outlined-basic"
-          label="Categoria"
+          label={initialDate ? "" : "Categoria"}
           variant="outlined"
           {...register("categoria")}
           required
           minLength={4}
           type="text"
-          placeholder="Categoria do gasto"
         />
 
         <TextField

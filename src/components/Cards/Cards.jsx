@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -9,13 +8,12 @@ import { Grid } from "@mui/material";
 import { DataContext } from "../Context/DataContext";
 import { useContext } from "react";
 import { totalValores } from "../../helpers";
-import { Link } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import { FormItem } from "../FormItem/FormItem";
 import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 
-const style = {
+export const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -44,7 +42,7 @@ export const Cards = () => {
   const valores = currenteData.map((item) => item.valor);
 
   return (
-    <Grid container spacing={5}>
+    <Grid container spacing={4}>
       <Grid item xs={4}>
         <Card sx={{ minWidth: 2 }}>
           <CardContent>
@@ -66,7 +64,7 @@ export const Cards = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={4} alignSelf={"center"}>
+      <Grid item xs={4}  alignSelf={"center"}>
         <Button variant="contained" onClick={handleOpen}>
           Novo lançamento
         </Button>
