@@ -13,6 +13,11 @@ export const verificaValor = (numero) => {
     for (let i = 0; i < sumNumeros.length; i++) {
       soma += sumNumeros[i];
     }
+    if (Number.isInteger(soma)) {
+      return soma.toFixed(2);
+    } else {
+      return soma.toString();
+    }
     return soma;
   }
 

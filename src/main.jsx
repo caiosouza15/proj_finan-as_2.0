@@ -6,6 +6,7 @@ import App from './App';
 import { ErrorPage } from './ErrorPage';
 import TableItems from './components/TableItems';
 import FormItem from './components/FormItem/index';
+import { DadosProvider } from './components/Context/DataContext';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DadosProvider>
+      <RouterProvider router={router} />
+    </DadosProvider>   
   </React.StrictMode>,
 )

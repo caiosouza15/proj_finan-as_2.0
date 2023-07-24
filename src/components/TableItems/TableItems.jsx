@@ -1,77 +1,91 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../../dbConfig";
+import * as React from 'react';
+
 import { Link } from "react-router-dom";
-import { captureId, getDados, totalValores, verificaValor } from "../../helpers";
-import HeaderBar from "../HeaderBar/HeaderBar";
+import { captureId, verificaValor } from "../../helpers";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import TablePagination from '@mui/material/TablePagination';
+import Typography from '@mui/material/Typography';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import { useContext } from 'react';
+import { DataContext } from '../Context/DataContext';
+import { useState } from 'react';
 
 export const TableItems = () => {
-  const [response, setResponse] = useState([]);
-  const valores = [];
-
-  useEffect(() => {
-    getDados().then((dados) => {
-      setResponse(dados)
-    });
-  }, []); 
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
   
-  response.map((item) => valores.push(item.valor))
 
-  return (
-    <>
-    <HeaderBar valores={valores} />
-      
+  const dataItems = useContext(DataContext);
+  const currenteData = dataItems.response;
 
-      <table className="table-fixed w-auto mt-5 text-sm text-left">
-        <thead className="text-xs bg-zinc-100 text-black">
-          <tr>
-            <th scope="col" className="px-6 py-3 text-center">
-              Titulo
-            </th>
-            <th scope="col" className="px-6 py-3 text-center">
-              Data
-            </th>
-            <th scope="col" className="px-6 py-3 text-center">
-              Categoria
-            </th>
-            <th scope="col" className="px-6 py-3 text-center">
-              Valor
-            </th>
-            <th scope="col" className="px-6 py-3 text-center">
-              Ações
-            </th>
-          </tr>
-        </thead>
+   const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-        {response.map((item, index) => (
-          <tbody key={item.id}>
-            <tr className="hover:bg-zinc-100">
-              <td className="px-6 py-4 text-center border-r">{item.name}</td>
-              <td className="px-6 py-4 text-center border-r">{item.data}</td>
-              <td className="px-6 py-4 text-center border-r">
-                {item.categoria}
-              </td>
-              <td className="px-6 py-4 text-center">
-              {verificaValor(item.valor)} R$
-              </td>
-              <td className="">
-                <button
-                  className="bg-transparent hover:bg-zinc-300 text-zinc font-semibold py-2 px-4 ml-4 border
-                  border-zinc-500 hover:border-transparent rounded"
-                >
-                  <Link to={`/createItem/${item.id}`}>Editar</Link>
-                </button>
-                <button
-                  onClick={() => captureId(item.id)}
-                  className="bg-transparent hover:bg-zinc-300 text-zinc font-semibold py-2 px-4 ml-4 border
-                  border-zinc-500 hover:border-transparent rounded "
-                >
-                  Excluir
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        ))}
-      </table>
-    </>
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  
+  
+
+  return (  
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}> 
+      <TableContainer >
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell><Typography variant='h6'>TITULO</Typography></TableCell>
+              <TableCell><Typography variant='h6'>DATA</Typography></TableCell>
+              <TableCell><Typography variant='h6'>CATEGORIA</Typography></TableCell>
+              <TableCell><Typography variant='h6'>VALOR</Typography></TableCell>
+              <TableCell><Typography variant='h6'>AÇÔES</Typography></TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {currenteData
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((item, index) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.data}</TableCell>
+                <TableCell>{item.categoria}</TableCell>
+                <TableCell>{verificaValor(item.valor)} R$</TableCell>
+                <TableCell>           
+
+                  <Stack spacing={2} direction="row" marginBottom={1}>                    
+                    <Button variant="outlined"><Link to={`/createItem/${item.id}`}><ModeEditOutlineIcon /></Link></Button>
+                  </Stack>
+
+                  <Stack spacing={2} direction="row">                    
+                    <Button variant="outlined" color='error'  onClick={() => captureId(item.id)}><DeleteForeverIcon /></Button>
+                  </Stack>
+                </TableCell>             
+                
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[2, 8]}
+        component="div"
+        count={currenteData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage} />
+      </Paper>
+    
   );
 };
