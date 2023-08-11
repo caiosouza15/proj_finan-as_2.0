@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { supabase } from "../../dbConfig";
-import { useParams } from "react-router-dom";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 
 export const FormItem = ({id}) => {
 
   const [initialDate, setInitialDate] = useState();
+  const [isEdited, setIsEdited] = useState(false);
     
   useEffect(() => {
     if (id) {
+      setIsEdited(true);
       async function fetchRecord() {
         const { data, error } = await supabase
           .from("registres")
@@ -57,7 +58,7 @@ export const FormItem = ({id}) => {
         });
     } else {
       await supabase
-        .from("registres")
+        .from("registers")
         .insert(data)
         .then((response) => {
           if (response.status != 201) {
@@ -81,7 +82,7 @@ export const FormItem = ({id}) => {
       useFlexGap 
       alignSelf={"center"}
     >
-      <Typography variant="h6" marginLeft={1.5}>Novo lançamento</Typography>
+      <Typography variant="h6" marginLeft={1.5}>{isEdited ? "Editar lançamento" : "Novo lançamento"}</Typography>
       <div>
         <TextField
           {...register("name")}

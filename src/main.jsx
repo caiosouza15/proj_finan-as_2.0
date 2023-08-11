@@ -12,17 +12,7 @@ const router = createBrowserRouter([
   {
       path: "/",
       element: <App />,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          path: "/",
-          element: <TableItems />,
-        },       
-        {
-          path: "/createItem/:id?",
-          element: <FormItem />,
-        },
-      ],
+      errorElement: <ErrorPage />,      
   }, 
 ]);
 
