@@ -7,39 +7,46 @@ import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import { DataContext } from "../Context/DataContext";
 import { useContext } from "react";
-import { totalValores } from "../../helpers";
+import { getDados, totalValores } from "../../helpers";
 import Modal from "@mui/material/Modal";
 import { FormItem } from "../FormItem/FormItem";
 import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
-
-export const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignSelf: "center",
-  rounded: true,
-  borderRadius: 2
-};
+import { styleButton, styleModal } from "./styles/styles";
+import { NewCategory } from "../Modals/ModalNewCategory";
+import { useEffect } from "react";
 
 export const Cards = () => {
-  const [open, setOpen] = useState(false);
+  const [openNewRelease, setOpenNewRelease] = useState(false);
+  const [openNewCategory, setOpenNewCategory] = useState(false);
+  const [tableItems, settableItems] = useState([]);
 
-  const dataItems = useContext(DataContext);
-  const currenteData = dataItems.response;
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { dataItems } = useContext(DataContext);
 
-  const valores = currenteData.map((item) => item.valor);
+  useEffect(() => {
+    if(dataItems){        
+        console.log(data);
+        console.log("AMO")
+        settableItems(dataItems);
+    }else{
+      getDados().then((data) => {
+        console.log("DATAUSE",data);
+        settableItems(data);
+      }); 
+    }    
+  }, [])
+  
+
+  const handleToggleNewRelease = (isOpen) => {
+    setOpenNewRelease(isOpen);
+  };
+
+  const handleToggleNewCategory = (isOpen) => {
+    setOpenNewCategory(isOpen);
+  };
+
+  const valores = tableItems.map((item) => item.valor);
 
   return (
     <Grid container spacing={4}>
@@ -53,8 +60,7 @@ export const Cards = () => {
           </CardContent>
         </Card>{" "}
       </Grid>
-      <Grid item xs={4}>
-        {" "}
+      <Grid item xs={4}>        
         <Card sx={{ minWidth: 2 }}>
           <CardContent>
             <Typography gutterBottom>
@@ -65,24 +71,44 @@ export const Cards = () => {
         </Card>
       </Grid>
       <Grid item xs={4}  alignSelf={"center"}>
-        <Button variant="contained" onClick={handleOpen}>
+        <Button variant="contained" onClick={() => handleToggleNewRelease(true)} size="small" sx={styleButton}>
           Novo lançamento
         </Button>
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={openNewRelease}
+          onClose={() => handleToggle(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={styleModal}>
             <Box sx={{
                display: "flex",              
                justifyContent: "flex-end",
-            }}><Button color="error" onClick={handleClose}><CloseIcon /></Button>
+            }}><Button color="error" onClick={() => handleToggleNewRelease(false)}><CloseIcon /></Button>
             </Box>            
             <FormItem />
           </Box>
         </Modal>
+
+        <Button variant="contained" size="small" onClick={() => handleToggleNewCategory(true)} sx={styleButton}>Nova Categoria</Button>
+        <Modal
+         open={openNewCategory}
+         onClose={() => handleToggleNewCategory(false)}
+         aria-labelledby="modal-modal-title"
+         aria-describedby="modal-modal-description"
+        >
+          <Box sx={styleModal}>
+            <Box
+            sx={{
+              display: "flex",              
+              justifyContent: "flex-end",
+           }}
+            ><Button color="error" onClick={() => handleToggleNewCategory(false)}><CloseIcon /></Button></Box>
+               
+          <NewCategory />
+          </Box>
+         
+        </Modal>        
       </Grid>
     </Grid>
   );

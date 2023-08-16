@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { captureId, verificaValor } from "../../helpers";
+import { captureId, getDados, verificaValor } from "../../helpers";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,22 +14,37 @@ import TablePagination from "@mui/material/TablePagination";
 import Typography from "@mui/material/Typography";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../Context/DataContext";
 import { useState } from "react";
 import { Box, Modal } from "@mui/material";
-import { style } from "../Cards/Cards";
 import CloseIcon from "@mui/icons-material/Close";
 import { FormItem } from "../FormItem/FormItem";
+import { styleModal } from "./styles/styles";
 
 export const TableItems = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
   const [open, setOpen] = useState(false);
   const [myId, setMyId] = useState();
+  const [tableItems, settableItems] = useState([]);
 
   const dataItems = useContext(DataContext);
-  const currenteData = dataItems.response;
+  
+ 
+  
+  useEffect(() => {
+    if(dataItems){       
+        console.log("AMO")
+        settableItems(dataItems);
+    }else{
+      getDados().then((data) => {
+        console.log("DATAUSE",data);
+        settableItems(data);
+      }); 
+    }    
+  }, [])
+  
 
 
   const handleOpen = (item) => {
@@ -48,6 +63,7 @@ export const TableItems = () => {
     setPage(0);
   };
 
+  console.log(tableItems.objects.keys(obj).map());
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer>
@@ -73,7 +89,7 @@ export const TableItems = () => {
           </TableHead>
 
           <TableBody>
-            {currenteData
+            {tableItems
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item, index) => (
                 <TableRow key={item.id}>
@@ -93,7 +109,7 @@ export const TableItems = () => {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
-                        <Box sx={style}>
+                        <Box sx={styleModal}>
                           <Box
                             sx={{
                               display: "flex",
@@ -129,7 +145,7 @@ export const TableItems = () => {
       <TablePagination
         rowsPerPageOptions={[2, 8]}
         component="div"
-        count={currenteData.length}
+        count={tableItems.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -13,12 +13,12 @@ export const NavBar = () => {
         padding: 0.5,
         borderRadius: 1
       }}>
-        <toolbar>
+        <div>
           <Typography variant="h6" component="div" sx={{
              fontFamily:"system-ui",
              textAlign: 'center'
           }}> FINANCE APP</Typography>
-        </toolbar>
+        </div>
       </AppBar>
     </Box>
   );
