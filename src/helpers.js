@@ -1,11 +1,9 @@
 import { supabase } from "./dbConfig";
 
 export const verificaValor = (numero) => {
-  console.log("entrada", numero);
   if (Number.isInteger(numero)) {
     return numero.toFixed(2);
   } else {
-    console.log(numero);
     return numero.toString();
   }
 };
@@ -20,7 +18,6 @@ export const totalValores = (sumNumeros) => {
   } else {
     return soma.toString();
   }
-  return soma;
 };
 
 export async function getDados() {

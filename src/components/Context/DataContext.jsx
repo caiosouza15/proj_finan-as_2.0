@@ -6,7 +6,7 @@ const initialValue = {};
 export const DataContext = createContext(initialValue);
 
 export function DadosProvider({ children }) {
-  const [tableItems, settableItems] = useState([]);
+  const [tableItems, setTableItems] = useState([]);
   const [category, setCategory] = useState([]);
 
   async function getDados() {
@@ -25,7 +25,7 @@ export function DadosProvider({ children }) {
 
   useEffect(() => {
     getDados().then((data) => {
-      settableItems(data);
+      setTableItems(data);
     });
     getCategorias().then((data) => {
       setCategory(data);

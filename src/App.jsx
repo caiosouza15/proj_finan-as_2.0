@@ -7,22 +7,8 @@ import { DataContext } from "./components/Context/DataContext";
 import TableItems from "./components/TableItems";
 
 const App = () => {
-
-  const [myItems, setMyItems] = useState();
-  const [myCategory, setMyCategory] = useState();
-
   const { data } = useContext(DataContext);
-
-  useEffect(() => {
-    console.log(data);
-  }, [])
   
-  // setMyItems(data.items);
-  // setMyCategory(data.category); 
-  
-  // console.log(items);
-  // console.log(category);
-console.log(data);
   return (
     <Box>
       <Box color="secundary" marginBottom>

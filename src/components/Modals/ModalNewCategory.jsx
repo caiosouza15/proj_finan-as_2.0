@@ -36,8 +36,6 @@ export const NewCategory = () => {
       });      
   };
 
-  console.log(errors.name);
-
   return (
     <Box onSubmit={handleSubmit(onSubmit)} component="form" sx={{ display: 'flex', alignSelf: 'center' }}>
       {isSending ? (
