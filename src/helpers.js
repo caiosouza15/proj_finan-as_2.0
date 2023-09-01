@@ -20,13 +20,6 @@ export const totalValores = (sumNumeros) => {
   }
 };
 
-export async function getDados() {
-  const { data } = await supabase.from("registers").select();
-  if (data.length) {
-    return data;
-  }
-}
-
 export const captureId = async (id) => {
   if (id) {
     confirm("Tem certeza que deseja excluir?");

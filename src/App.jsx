@@ -6,8 +6,7 @@ import { Cards } from "./components/Cards/Cards";
 import { DataContext } from "./components/Context/DataContext";
 import TableItems from "./components/TableItems";
 
-const App = () => {
-  const { data } = useContext(DataContext);
+const App = () => {  
   
   return (
     <Box>
@@ -20,7 +19,7 @@ const App = () => {
           <Cards />{" "}
         </Grid>
         <Grid item xs={6}>
-          { data ? "TEST" : <TableItems />}
+           <TableItems />
              
                    
         </Grid>

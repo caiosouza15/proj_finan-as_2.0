@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import { useForm } from "react-hook-form";
 import { supabase } from "../../dbConfig";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { DataContext } from "../Context/DataContext";
+import CloseIcon from "@mui/icons-material/Close";
+import { TableItems } from "../TableItems/TableItems";
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
-export const FormItem = ({id}) => {
-
+export const FormItem = ({ id }) => {
   const [initialDate, setInitialDate] = useState();
   const [isEdited, setIsEdited] = useState(false);
-    
+
+  const { setmodalIsOpen, category } = useContext(DataContext);
+
+  console.log(category);
+
   useEffect(() => {
     if (id) {
       setIsEdited(true);
@@ -42,6 +51,10 @@ export const FormItem = ({id}) => {
     setValue("valor", initialDate.valor);
   }
 
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   const onSubmit = async (data) => {
     if (id) {
       await supabase
@@ -53,7 +66,8 @@ export const FormItem = ({id}) => {
           if (response.error !== null) {
             alert("OPA, OPA, OPA... Calma ia meu patrão.");
           } else {
-            window.location = "/";
+           setmodalIsOpen(false);
+           <TableItems />
           }
         });
     } else {
@@ -64,7 +78,8 @@ export const FormItem = ({id}) => {
           if (response.status != 201) {
             alert("OPA, OPA, OPA... Calma ia meu patrão.");
           } else {
-            window.location = "/";
+            setmodalIsOpen(false);
+            <TableItems />
           }
         });
     }
@@ -79,10 +94,22 @@ export const FormItem = ({id}) => {
       }}
       noValidate
       autoComplete="off"
-      useFlexGap 
+      useFlexGap
       alignSelf={"center"}
     >
-      <Typography variant="h6" marginLeft={1.5}>{isEdited ? "Editar lançamento" : "Novo lançamento"}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button color="error" onClick={() => setmodalIsOpen(false)}>
+          <CloseIcon />
+        </Button>
+      </Box>
+      <Typography variant="h6" marginLeft={1.5}>
+        {isEdited ? "Editar lançamento" : "Novo lançamento"}
+      </Typography>
       <div>
         <TextField
           {...register("name")}
@@ -101,19 +128,22 @@ export const FormItem = ({id}) => {
           {...register("data")}
           required
           type="date"
-          
         />
       </div>
       <div>
-        <TextField
-          id="outlined-basic"
-          label={initialDate ? "" : "Categoria"}
-          variant="outlined"
-          {...register("categoria")}
-          required
-          minLength={4}
-          type="text"
-        />
+        
+        <Select
+          labelId="demo-simple-select-autowidth-label"
+          id="demo-simple-select-autowidth"
+          value={category}         
+          label="category"
+          sx={{width: 100 }}
+        >
+          {category.map((item) => {
+            <MenuItem value={item.id}>item.name</MenuItem>
+          })}
+        
+        </Select>
 
         <TextField
           id="outlined-basic"
@@ -135,7 +165,7 @@ export const FormItem = ({id}) => {
         <Stack spacing={2} direction="row" marginLeft={1}>
           <Button variant="outlined" type="submit">
             Enviar
-          </Button>          
+          </Button>
         </Stack>
       </div>
     </Box>

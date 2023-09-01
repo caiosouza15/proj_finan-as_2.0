@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { captureId, getDados, verificaValor } from "../../helpers";
+import { captureId, verificaValor } from "../../helpers";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -29,8 +29,7 @@ export const TableItems = () => {
   const [open, setOpen] = useState(false);
   const [myId, setMyId] = useState();
 
-  const { tableItems, category } = useContext(DataContext);
-
+  const { items } = useContext(DataContext);
 
   const handleOpen = (item) => {
     setOpen(true);
@@ -49,7 +48,7 @@ export const TableItems = () => {
   };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      {tableItems.length ? (
+      {items.length ? (
         <div>
           <TableContainer>
             <Table stickyHeader aria-label="sticky table">
@@ -74,7 +73,7 @@ export const TableItems = () => {
               </TableHead>
 
               <TableBody>
-                {tableItems
+                {items
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((item, index) => (
                     <TableRow key={item.id}>
@@ -107,7 +106,7 @@ export const TableItems = () => {
                                   <CloseIcon />
                                 </Button>
                               </Box>
-                              <FormItem id={myId}  />
+                              <FormItem id={myId} />
                             </Box>
                           </Modal>
                         </Stack>
@@ -130,7 +129,7 @@ export const TableItems = () => {
           <TablePagination
             rowsPerPageOptions={[2, 8]}
             component="div"
-            count={tableItems.length}
+            count={items.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -138,7 +137,7 @@ export const TableItems = () => {
           />
         </div>
       ) : (
-        <Loading marginValue={2}/>
+        <Loading marginValue={2} />
       )}
     </Paper>
   );
