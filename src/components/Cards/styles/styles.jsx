@@ -16,7 +16,7 @@ export const styleModal = {
   };
 
   export const styleButton = {
-    width: 180,
+    width: 120,
     margin: 1,
   }
   

@@ -9,6 +9,7 @@ export function DadosProvider({ children }) {
   const [items, setItems] = useState([]);
   const [category, setCategory] = useState([]);
   const [modalIsOpen, setmodalIsOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   async function getDados() {
     const { data } = await supabase.from("registers").select();
@@ -34,9 +35,9 @@ export function DadosProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ items, category, modalIsOpen, setmodalIsOpen }),
-    [items, category, modalIsOpen, setmodalIsOpen]
-  );
+    () => ({ items, category, modalIsOpen, setmodalIsOpen, setItems, getDados,setOpenSnackbar, openSnackbar }),
+    [items, category, modalIsOpen, setmodalIsOpen, setItems, getDados,setOpenSnackbar, openSnackbar]
+  ); 
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

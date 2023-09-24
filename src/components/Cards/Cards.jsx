@@ -44,15 +44,14 @@ export const Cards = () => {
               )}
             </Typography>
           </CardContent>
-        </Card>{" "}
+        </Card>
       </Grid>
       <Grid item xs={4}>
         <Card sx={{ minWidth: 2 }}>
           <CardContent>
             <Typography gutterBottom>Total ganho:</Typography>
-            <Typography variant="h6" color="primary">
-              {" "}
-              00,00R$ R$
+            <Typography variant="h6" color="primary">              
+              00,00R$
             </Typography>
           </CardContent>
         </Card>
