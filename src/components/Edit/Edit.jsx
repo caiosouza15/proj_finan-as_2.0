@@ -20,7 +20,7 @@ export const Edit = ({ id }) => {
   const [initialDate, setInitialDate] = useState();
   const [categories, setCategories] = useState("");
 
-  const { setmodalIsOpen, items, category, getDados } = useContext(DataContext);
+  const { setmodalIsOpen, items, category, getDados, setItems } = useContext(DataContext);
 
   const handleChange = (event) => {
     setCategories(event.target.value);
@@ -57,12 +57,11 @@ export const Edit = ({ id }) => {
     .update(data)
     .eq("id", id)
     .then((response) => {
-      if (response.error !== null) {
-        console.log(response)
+      if (response.error !== null) {        
         alert("OPA, OPA, OPA... Calma ia meu patrão.");
       } else {
         setmodalIsOpen(false);
-        getD-ados().then((data) => setItems(data));
+        getDados().then((data) => setItems(data));
       }
     });
   }
@@ -132,11 +131,12 @@ export const Edit = ({ id }) => {
             label={categories}         
             onChange={handleChange}
             sx={{ width: 400, marginTop: 1 }}
+            defaultValue={initialDate.categoria}
             {...register("categoria", categories)}           
           >
             {category.map((item) => {
               return (
-                <MenuItem key={item.id} value={item.name}>
+                <MenuItem key={item.id} value={item.name} >
                   {item.name}
                 </MenuItem>
               );

@@ -24,10 +24,16 @@ export const Cards = () => {
 
   const handleToggleNewCategory = (isOpen) => {
     setOpenNewCategory(isOpen);
-  };
-
-  const valores = items.map((item) => item.valor);
-
+  };   
+  
+  const verifyItems = (items) => {
+    if(items === undefined){
+      return "00.00";
+    }else{
+      const valores =  items.map((item) => item.valor); 
+      return valores;
+    }
+  }
   return (
     <Grid container spacing={4}>
       <Grid item xs={4}>
@@ -37,11 +43,7 @@ export const Cards = () => {
               Total gasto:
             </Typography>
             <Typography variant="h6" color="error">
-              {items.length ? (
-                <div>{totalValores(valores)} R$</div>
-              ) : (
-                <Loading marginValue={5} />
-              )}
+              {verifyItems(items)}
             </Typography>
           </CardContent>
         </Card>
@@ -57,6 +59,7 @@ export const Cards = () => {
         </Card>
       </Grid>
       <Grid item xs={4} alignSelf={"center"}>
+        <Box>
         <Button
           variant="contained"
           onClick={() => setmodalIsOpen(true)}
@@ -76,6 +79,8 @@ export const Cards = () => {
           </Box>
         </Modal>
 
+        </Box>
+       
         <Button
           variant="contained"
           size="small"

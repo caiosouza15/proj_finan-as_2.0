@@ -26,7 +26,7 @@ import { Edit } from "../Edit/Edit";
 
 export const TableItems = () => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(4);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
   const [open, setOpen] = useState(false);
   const [myId, setMyId] = useState();
 
@@ -44,7 +44,7 @@ export const TableItems = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
+  };  
 
   const title = ["TITULO", "DATA", "CATEGORIA", "VALOR", "AÇÔES"];
   return (
@@ -57,8 +57,8 @@ export const TableItems = () => {
                 <TableHead>
                   <TableRow>
                     {title.map((title) => (
-                      <TableCell>
-                        <Typography variant="h6">{title}</Typography>
+                      <TableCell key={title}>
+                        <Typography variant="h6" >{title}</Typography>
                       </TableCell>
                     ))}
                   </TableRow>

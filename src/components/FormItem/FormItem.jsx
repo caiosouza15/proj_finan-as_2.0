@@ -19,7 +19,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 
 
-export const FormItem = ({ id }) => {
+export const FormItem = () => {
  
   const [categories, setCategories] = useState("");
 
@@ -84,10 +84,10 @@ export const FormItem = ({ id }) => {
           align="center"
           marginBottom={2}
         >
-          {"Novo lançamento"}
+          Novo lançamento
         </Typography>
 
-        <div>
+        <Box>
           <TextField
             {...register("name")}
             id="outlined-basic"
@@ -108,7 +108,7 @@ export const FormItem = ({ id }) => {
             required
             type="date"
           />
-        </div>
+        </Box>
 
         <FormControl
           sx={{

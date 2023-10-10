@@ -6,9 +6,11 @@ import { Cards } from "./components/Cards/Cards";
 import { DataContext } from "./components/Context/DataContext";
 import TableItems from "./components/TableItems";
 import { SucessBar } from "./components/Snackbars/Snackbars";
+import { Loading } from "./components/Load/Load";
+import { EmptyPage } from "./components/EmptyPage/EmptyPage";
 
 const App = () => {  
-  const {openSnackbar} = useContext(DataContext);
+  const {openSnackbar, items} = useContext(DataContext);  
 
   return (
     <Container>
@@ -22,8 +24,7 @@ const App = () => {
           <Cards />{" "}
         </Grid>
         <Grid item xs={8}>
-           <TableItems />
-             
+           {items != undefined ? <TableItems /> : <EmptyPage />}            
                    
         </Grid>
       </Grid>

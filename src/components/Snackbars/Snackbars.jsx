@@ -4,8 +4,7 @@ import { DataContext } from "../Context/DataContext";
 
 
 export const SucessBar = () =>{
-    const {openSnackbar, setOpenSnackbar} = useContext(DataContext);
-    console.log(openSnackbar);
+    const {openSnackbar, setOpenSnackbar} = useContext(DataContext);    
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
