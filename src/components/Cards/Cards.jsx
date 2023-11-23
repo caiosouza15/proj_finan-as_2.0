@@ -16,21 +16,29 @@ import { styleButton, styleModal } from "./styles/styles";
 import { NewCategory } from "../Modals/ModalNewCategory";
 import { Loading } from "../Load/Load";
 
-export const Cards = () => {
-  const [openNewRelease, setOpenNewRelease] = useState(false);
+export const Cards = () => { 
   const [openNewCategory, setOpenNewCategory] = useState(false);
+  const [ modalIsOpen, setmodalIsOpen] = useState(false);
 
-  const { items, modalIsOpen, setmodalIsOpen } = useContext(DataContext); 
+  const { items } = useContext(DataContext); 
 
   const handleToggleNewCategory = (isOpen) => {
     setOpenNewCategory(isOpen);
-  };   
+  };
+
+  const handleToggleNewDespesa = (isOpen) => {
+    setmodalIsOpen(isOpen);
+  }; 
   
-  const verifyItems = (items) => {
+  const verifyItems = ({valor} = items??0) => {
     if(items === undefined){
       return "00.00";
     }else{
-      const valores =  items.map((item) => item.valor); 
+      const valores =  items.map(({valor} = items) => {        
+        if (Number.isInteger(valor)){              
+          return valor.toFixed(2);
+        } 
+      }); 
       return valores;
     }
   }
@@ -59,27 +67,40 @@ export const Cards = () => {
         </Card>
       </Grid>
       <Grid item xs={4} alignSelf={"center"}>
-        <Box>
-        <Button
-          variant="contained"
-          onClick={() => setmodalIsOpen(true)}
-          size="small"
-          sx={styleButton}
-        >
-          Novo lançamento
-        </Button>
-        <Modal
-          open={modalIsOpen}
-          onClose={() => setmodalIsOpen(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={styleModal}>            
-            <FormItem />
-          </Box>
-        </Modal>
+       
+          <Button
+            variant="contained"
+            onClick={() => handleToggleNewDespesa(true)}
+            size="small"
+            sx={styleButton}
+          >
+            Novo lançamento
+          </Button>
+          <Modal
+            open={modalIsOpen}            
+            onClose={() => handleToggleNewDespesa(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={styleModal}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                color="error"
+                onClick={() => handleToggleNewDespesa(false)}
+              >
+                <CloseIcon />
+              </Button>
+            </Box>
 
-        </Box>
+              <FormItem />
+            </Box>
+          </Modal>
+       
        
         <Button
           variant="contained"

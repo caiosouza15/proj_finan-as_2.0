@@ -30,6 +30,7 @@ export const FormItem = () => {
     setItems,
     openSnackbar,
     setOpenSnackbar,
+   
   } = useContext(DataContext);
 
   const handleChange = (event) => {
@@ -67,17 +68,7 @@ export const FormItem = () => {
       }}
       alignSelf={"center"}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button color="error" onClick={() => setmodalIsOpen(false)}>
-            <CloseIcon />
-          </Button>
-        </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>        
         <Typography
           variant="h5"
           marginLeft={1.5}
