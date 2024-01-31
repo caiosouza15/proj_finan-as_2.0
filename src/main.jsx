@@ -11,15 +11,15 @@ import { DadosProvider } from './components/Context/DataContext';
 const router = createBrowserRouter([
   {
       path: "/",
-      element: <App />,
+      element: <App/>,
       errorElement: <ErrorPage />,      
   }, 
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <React.StrictMode >
     <DadosProvider>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}/>
     </DadosProvider>   
   </React.StrictMode>,
 )
