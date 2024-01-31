@@ -9,31 +9,37 @@ import { SucessBar } from "./components/Snackbars/Snackbars";
 import { Loading } from "./components/Load/Load";
 import { EmptyPage } from "./components/EmptyPage/EmptyPage";
 
-const App = () => {  
-  const {openSnackbar, items} = useContext(DataContext);  
+const App = () => {
+  const { openSnackbar, items } = useContext(DataContext);
 
   return (
-    <Container>
-      <Box>
-        <Box color="secundary" marginBottom>
-          <NavBar />
+    <Container >
+      <Container>
+        <Box marginBottom={4}>
+          <Box color="secundary" marginBottom>
+            <NavBar />
+          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Cards />
+            </Grid>
+          </Grid>
+          {openSnackbar &&
+            <SucessBar />
+          }
         </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          {" "}
-          <Cards />{" "}
-        </Grid>
-        <Grid item xs={8}>
-           {items != undefined ? <TableItems /> : <EmptyPage />}            
-                   
-        </Grid>
-      </Grid>
-      {openSnackbar && 
-        <SucessBar />
-      }
-    </Box>
+        <Box>
+          <Grid item >
+            {items != undefined ? <TableItems /> : <EmptyPage />}
+
+          </Grid>
+        </Box>
+      </Container>
+
     </Container>
-    
+
+
+
   );
 };
 

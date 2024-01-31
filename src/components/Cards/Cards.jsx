@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { styleButton, styleModal } from "./styles/styles";
 import { NewCategory } from "../Modals/ModalNewCategory";
 import { Loading } from "../Load/Load";
+import { AmountEarned } from "./AmountsEarned";
 
 export const Cards = () => { 
   const [openNewCategory, setOpenNewCategory] = useState(false);
@@ -32,11 +33,11 @@ export const Cards = () => {
   
   const verifyItems = ({valor} = items??0) => {
     if(items === undefined){
-      return "00.00";
+      return "00.00 R$";
     }else{
       const valores =  items.map(({valor} = items) => {        
         if (Number.isInteger(valor)){              
-          return valor.toFixed(2);
+          return ` ${valor.toFixed(2)} R$` ;
         } 
       }); 
       return valores;
@@ -46,14 +47,7 @@ export const Cards = () => {
     <Grid container spacing={4}>
       <Grid item xs={4}>
         <Card sx={{ minWidth: 2 }}>
-          <CardContent>
-            <Typography color="text.secondary" gutterBottom>
-              Total gasto:
-            </Typography>
-            <Typography variant="h6" color="error">
-              {verifyItems(items)}
-            </Typography>
-          </CardContent>
+          <AmountEarned />
         </Card>
       </Grid>
       <Grid item xs={4}>
@@ -61,7 +55,7 @@ export const Cards = () => {
           <CardContent>
             <Typography gutterBottom>Total ganho:</Typography>
             <Typography variant="h6" color="primary">              
-              00,00R$
+              00,00 R$
             </Typography>
           </CardContent>
         </Card>

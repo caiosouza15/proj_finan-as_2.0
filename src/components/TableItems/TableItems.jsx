@@ -48,8 +48,8 @@ export const TableItems = () => {
 
   const title = ["TITULO", "DATA", "CATEGORIA", "VALOR", "AÇÔES"];
   return (
-    <Container>
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Container sx={{display: "flex" }}>
+      <Paper sx={{ width: "100%", overflow: "hidden", }}>
         {items.length ? (
           <div>
             <TableContainer>
@@ -58,7 +58,7 @@ export const TableItems = () => {
                   <TableRow>
                     {title.map((title) => (
                       <TableCell key={title}>
-                        <Typography variant="h6" >{title}</Typography>
+                        <Typography variant="h7" >{title}</Typography>
                       </TableCell>
                     ))}
                   </TableRow>
