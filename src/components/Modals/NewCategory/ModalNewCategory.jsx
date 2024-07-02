@@ -3,15 +3,17 @@ import {
   Box,
   Button,
   CircularProgress,
+  Container,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { supabase } from "../../dbConfig";
+import { supabase } from "../../../dbConfig";
 import { useState } from "react";
+import { styleModal } from "../styles/styles";
 
-export const NewCategory = () => {
+export const ModalNewCategory = () => {
 
   const [isSending, setIsSending] = useState(false);
 
@@ -28,7 +30,7 @@ export const NewCategory = () => {
       .insert(data)
       .then((response) => {
         if (response.status === 201) {
-          setTimeout(() => {window.location = "/"; }, 1000);                  
+          setTimeout(() => {window.location = "/"; }, 500);                  
         }
         else{
           setIsSending(false);
@@ -37,7 +39,9 @@ export const NewCategory = () => {
   };
 
   return (
-    <Box onSubmit={handleSubmit(onSubmit)} component="form" sx={{ display: 'flex', alignSelf: 'center' }}>
+    <Container> 
+    <Box onSubmit={handleSubmit(onSubmit)} component="form" 
+      sx={styleModal}>
       {isSending ? (
         <CircularProgress />
       ) : (
@@ -86,5 +90,7 @@ export const NewCategory = () => {
         </Box>
       )}
     </Box>
+    </Container> 
+
   );
 };
