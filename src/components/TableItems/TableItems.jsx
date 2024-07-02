@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { captureId, verificaValor } from "../../helpers";
+import { captureId, verificaValor, verifyItems } from "../../helpers";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -27,7 +27,6 @@ import { Edit } from "../Edit/Edit";
 export const TableItems = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(2);
-  const [open, setOpen] = useState(false);
   const [myId, setMyId] = useState();
 
   const { items, modalIsOpen, setmodalIsOpen } = useContext(DataContext);

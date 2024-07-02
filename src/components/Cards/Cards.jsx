@@ -13,9 +13,9 @@ import { FormItem } from "../FormItem/FormItem";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { styleButton, styleModal } from "./styles/styles";
-import { NewCategory } from "../Modals/ModalNewCategory";
-import { Loading } from "../Load/Load";
+
 import { AmountEarned } from "./AmountsEarned";
+import { ModalNewCategory } from "../Modals/NewCategory/ModalNewCategory";
 
 export const Cards = () => { 
   const [openNewCategory, setOpenNewCategory] = useState(false);
@@ -125,7 +125,7 @@ export const Cards = () => {
               </Button>
             </Box>
 
-            <NewCategory />
+            <ModalNewCategory />
           </Box>
         </Modal>
       </Grid>
